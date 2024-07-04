@@ -8,68 +8,78 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.unit.dp
 import com.nexusportfolio.client.data.model.LineChartData
 
-//@Composable
-//fun LineChart(lineChartData: LineChartData) {
-//    Canvas(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .height(200.dp)
-//    ) {
-//        val maxX = size.width
-//        val maxY = size.height
-//
-//        // Menghitung jumlah titik data
-//        val numPoints = lineChartData.month.size
-//
-//        // Menghitung panjang interval horizontal dan vertikal
-//        val intervalX = maxX / (numPoints - 1)
-//        val intervalY = maxY / 12 // karena data month antara 1-12
-//
-//        // Membuat path untuk menggambar garis
-//        val path = Path()
-//        path.moveTo(0f, maxY - lineChartData.month[0] * intervalY)
-//
-//        // Menggambar garis berdasarkan titik data
-//        for (i in 1 until numPoints) {
-//            path.lineTo(i * intervalX, maxY - lineChartData.month[i] * intervalY)
-//        }
-//
-//        // Menggambar garis
-//        drawPath(path = path, color = Color.Blue, alpha = 0.8f)
-//    }
-//}
-//@Composable
-//fun LineChart(data: LineChartData) {
-//    Box(modifier = Modifier
-//        .fillMaxWidth()
-//        .height(200.dp)
-//        .padding(16.dp)
-//    ) {
-//        // Implement Line Chart UI
-//    }
-//}
-
 @Composable
 fun LineChart(data: LineChartData) {
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .height(200.dp)
-        .padding(16.dp)
+    val months = listOf("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp)
+            .padding(16.dp)
     ) {
         Canvas(modifier = Modifier.fillMaxSize()) {
-            val padding = 20f
+            val padding = 40f
             val maxY = (data.month.maxOrNull() ?: 0).toFloat()
             val minY = (data.month.minOrNull() ?: 0).toFloat()
             val yRange = maxY - minY
             val xInterval = (size.width - 2 * padding) / (data.month.size - 1)
             val yScale = (size.height - 2 * padding) / yRange
 
-            // Draw the line
+            // Draw the x and y axis lines
+            drawLine(
+                color = Color.Gray,
+                start = Offset(padding, size.height - padding),
+                end = Offset(size.width - padding, size.height - padding),
+                strokeWidth = 2f
+            )
+
+            drawLine(
+                color = Color.Gray,
+                start = Offset(padding, padding),
+                end = Offset(padding, size.height - padding),
+                strokeWidth = 2f
+            )
+
+            // Draw x-axis labels
+            data.month.forEachIndexed { index, _ ->
+                val x = padding + index * xInterval
+                drawContext.canvas.nativeCanvas.drawText(
+                    months.getOrNull(index) ?: (index + 1).toString(),
+                    x,
+                    size.height - padding / 2,
+                    android.graphics.Paint().apply {
+                        color = android.graphics.Color.BLACK
+                        textAlign = android.graphics.Paint.Align.CENTER
+                        textSize = 24f
+                    }
+                )
+            }
+
+            // Draw y-axis labels
+            val yLabelCount = 5
+            for (i in 0..yLabelCount) {
+                val y = padding + i * (size.height - 2 * padding) / yLabelCount
+                val yValue = maxY - i * yRange / yLabelCount
+                drawContext.canvas.nativeCanvas.drawText(
+                    yValue.toInt().toString(),
+                    padding / 2,
+                    y,
+                    android.graphics.Paint().apply {
+                        color = android.graphics.Color.BLACK
+                        textAlign = android.graphics.Paint.Align.RIGHT
+                        textSize = 24f
+                    }
+                )
+            }
+
+            // Draw the line chart
             data.month.forEachIndexed { index, value ->
                 if (index < data.month.size - 1) {
                     val startX = padding + index * xInterval
@@ -79,8 +89,8 @@ fun LineChart(data: LineChartData) {
 
                     drawLine(
                         color = Color.Blue,
-                        start = androidx.compose.ui.geometry.Offset(startX, startY),
-                        end = androidx.compose.ui.geometry.Offset(endX, endY),
+                        start = Offset(startX, startY),
+                        end = Offset(endX, endY),
                         strokeWidth = 4f
                     )
                 }
@@ -88,3 +98,5 @@ fun LineChart(data: LineChartData) {
         }
     }
 }
+
+

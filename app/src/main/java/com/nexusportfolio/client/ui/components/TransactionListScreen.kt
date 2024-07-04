@@ -3,9 +3,6 @@ package com.nexusportfolio.client.ui.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -16,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -26,7 +22,6 @@ import com.nexusportfolio.client.R
 import com.nexusportfolio.client.data.model.Constants.TRANSACTION_TYPE.Companion.CASH_WITHDRAWAL
 import com.nexusportfolio.client.data.model.Constants.TRANSACTION_TYPE.Companion.QRIS_PAYMENT
 import com.nexusportfolio.client.data.model.Constants.TRANSACTION_TYPE.Companion.TOPUP_GOPAY
-import com.nexusportfolio.client.data.model.Constants.TRANSACTION_TYPE.Companion.TYPE_OTHER
 import com.nexusportfolio.client.data.model.Extension.Companion.rupiahFormatting
 import com.nexusportfolio.client.data.model.Transaction
 import com.nexusportfolio.client.ui.theme.blue2

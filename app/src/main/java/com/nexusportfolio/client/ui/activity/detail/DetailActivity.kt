@@ -10,7 +10,7 @@ import com.nexusportfolio.client.data.model.DonutChartData
 import com.nexusportfolio.client.ui.components.DetailScreen
 import com.nexusportfolio.client.ui.theme.NexusPortfolioTheme
 
-//@AndroidEntryPoint
+
 class DetailActivity : ComponentActivity() {
     private val TAG = DetailActivity::class.java.simpleName
     private lateinit var deliveredDData : DonutChartData

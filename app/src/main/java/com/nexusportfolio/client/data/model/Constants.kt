@@ -73,7 +73,6 @@ object Constants {
             const val CASH_WITHDRAWAL = "Tarik Tunai"
             const val QRIS_PAYMENT = "Qris Payment"
             const val TOPUP_GOPAY = "Topup Gopay"
-            const val TYPE_OTHER = "Lainnya"
         }
     }
 }

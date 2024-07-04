@@ -3,12 +3,6 @@ package com.nexusportfolio.client.data.model
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
-//@Parcelize
-//data class Transaction(
-//    val trxDate: String,
-//    val nominal: Int
-//):Parcelable
-
 @Parcelize
 data class Transaction(
     val trx_date: String,
